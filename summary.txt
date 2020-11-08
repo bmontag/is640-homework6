@@ -1,0 +1,63 @@
+Total word count: 6420
+Total character count: 39411
+The average word length: 6.14
+The average sentence length: 70.88
+
+A word distribution of all words ending in "ly":
+Absolutely: 1
+Actively: 1
+Actually: 1
+Badly: 1
+Closely: 1
+Completely: 1
+Constantly: 1
+Critically: 1
+Daily: 1
+Deadly: 3
+Domestically: 1
+Dramatically: 1
+Early: 1
+Entirely: 1
+Especially: 2
+Exactly: 1
+Fairly: 1
+Family: 6
+Finally: 4
+Financially: 1
+Frankly: 1
+Fully: 2
+Highly: 1
+Historically: 1
+Illegally: 2
+Immediately: 3
+Importantly: 1
+Incredibly: 1
+Massively: 1
+Nearly: 3
+Only: 3
+Perfectly: 1
+Poorly: 1
+Previously: 2
+Pro-family: 1
+Promptly: 1
+Properly: 1
+Proudly: 1
+Quickly: 3
+Rapidly: 3
+Really: 1
+Recently: 1
+Relentlessly: 1
+Safely: 1
+Simply: 1
+Strongly: 2
+Substantially: 4
+Surely: 1
+Totally: 4
+Tragically: 1
+Unlawfully: 1
+Viciously: 1
+Wildly: 1
+Wonderfully: 1
+
+A list of top 10 longest words in descending order:
+U.s.-mexico-canada, Great-grandfather, Administrations, Congratulations, Record-breaking, Taxpayer-funded, Administration, Constitutional, Groundbreaking, Infrastructure
