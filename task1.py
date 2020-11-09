@@ -1,7 +1,34 @@
 import string
 from collections import Counter
 
-FILE_PATH = "hw.txt"
+"""
+The word analysis is performed in the WordAnalysis class as per the assumptions below: 
+
+# General Informations
+- The name of the file to be analysed is provided in the "FILE_PATH" global variable. Default value is "task1-content.txt"
+
+# Definitions
+- Is considered a word any chunk of one or more characters.
+- A word is separated from another word by either a space or a line return.
+    > Example: "taxpayer-funded", "U.S.-Mexico-Canada" and "401(k)s" are considered a word.
+
+- Is considered a sentence any group of one or more words that ends with one of the following punctuation signs: (. / ! / ?)
+    > Example 1: "(Applause.)" and "USA!" are considered a sentence.
+    > Example 2: "(applause)" is NOT considered a sentence, but is still part of larger sentence.
+
+# Analysis Rules
+- The word length is based on the count of characters that compose the word excepted trailing and leading non-alphanumerical characters.
+    > Example 1: All characters are counted in "taxpayer-funded" and "U.S.-Mexico-Canada".
+    > Example 2: The parenthesis and the final punctuation are NOT counted in "(Applause.)"
+
+- The average sentence length is based on the total number of ponctuation signs (. / ! / ?) that *ends* a word.
+
+- The longest words are determined as per the definitions above, and are sorted alphabetically when of equal length.
+
+- Character casing is homogenised before processing, when relevant.
+"""
+
+FILE_PATH = "task1-content.txt"
 OUTPUT_PATH = "summary.txt"
 
 TOTAL_WORD_COUNT = "Total word count: {}"
@@ -12,16 +39,12 @@ LY_WORDS_DISTRIBUTION = "\nA word distribution of all words ending in \"ly\":"
 WORD_DISTRIBUTION = "{}: {}"
 DESC_LONGEST_WORD = "\nA list of top 10 longest words in descending order:"
 
-ALL_LETTERS = ["A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z"]
-
 class WordAnalysis():
     raw_data = ""
     words = []
     sanitized_words = []
     word_count = 0
     character_count = 0
-    # average_word_length = 0
-    # average_sentence_length = 0
 
     def __init__(self, raw_data):
         self.raw_data = raw_data
@@ -51,32 +74,38 @@ class WordAnalysis():
         for word in self.words:
             s_word = word.lstrip(string.punctuation)
             s_word = s_word.rstrip(string.punctuation)
-            self.sanitized_words.append(s_word.capitalize()) 
+            self.sanitized_words.append(s_word.title())
 
     def average_word_length(self):
-        return (0) if (self.word_count == 0) else (self.character_count / self.word_count)
+        sanitized_words_total_length = 0
+
+        for word in self.sanitized_words:
+            sanitized_words_total_length += len(word)
+
+        return (0) if (self.word_count == 0) else (sanitized_words_total_length / self.word_count)
     
     def sentence_break_count(self):
-        breakers = [".", "!", "?"]
+        breakers = [".", "!", "?", ".)"]
         count = 0
-        # TODO:
-        # Remove ending parenthesis
-        # Count only if the breaker ends the word
-        for breaker in breakers:
-            count += self.raw_data.count(breaker)
+
+        for word in self.words:
+            for breaker in breakers:
+                if word.endswith(breaker):
+                    count += 1
+                    break
 
         return count
 
     def average_sentence_length(self):
         sentence_count = self.sentence_break_count()
-        return (0) if (sentence_count == 0) else (self.character_count / sentence_count)
+        return (0) if (sentence_count == 0) else (self.word_count / sentence_count)
 
     def distribution_for_words_ending_by(self, ending):
         filtered_words = list(filter(lambda item: item.endswith(ending), self.sanitized_words))
         filtered_words.sort()
         return Counter(filtered_words)
 
-    def extract_longest_word(self, count):
+    def extract_longest_words(self, count):
         filtered_words = list(set(self.sanitized_words))
         filtered_words.sort()
         filtered_words.sort(key=len, reverse=True)
@@ -130,7 +159,7 @@ def task1():
         logger.log(WORD_DISTRIBUTION.format(word, count))
 
     logger.log(DESC_LONGEST_WORD)
-    longest_words = analysis.extract_longest_word(10)
+    longest_words = analysis.extract_longest_words(10)
     logger.log(", ".join(longest_words))
         
 task1()
